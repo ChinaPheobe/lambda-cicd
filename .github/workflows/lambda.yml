@@ -13,28 +13,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set Up Python     #Setups our python environment
+      - name: Set Up Python     # Set up our python environment
         uses: actions/setup-python@v2
         with:
           python-version: '3.12'
 
-      - name: Install Dependencies   #Installs any packages
-        runs:
+      - name: Install Dependencies   # Install any packages
+        run: |
           python -m pip install --upgrade pip
           pip install -r lambda/requirements.txt -t lambda
 
-      - name: Configure AWS Creds   # Sets up our AWS cred
+      - name: Configure AWS Creds   # Set up our AWS creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-access-secret-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
 
-      - name: Deploy Lambda Function #Zips lambda Directory and updates lambda function
-        runs: 
-            cd lambda
-            zip -r lambda.zip .
-            aws lambda update-function-code --function-name my-test-cicd-lambda --zip-file file://lambda.zip 
+      - name: Deploy Lambda Function # Zip lambda directory and update lambda function
+        run: |
+          cd lambda
+          zip -r lambda.zip .
+          aws lambda update-function-code --function-name my-test-cicd-lambda --zip-file file://lambda.zip
 
 
 
