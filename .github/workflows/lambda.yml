@@ -11,10 +11,10 @@ jobs:
   deploy-lambda:      # name of our job 
     runs-on: ubuntu-latest     # Specifies the runner
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Set Up Python     # Set up Python environment
-        uses: actions/setup-python@v2  # Updated version of the action
+        uses: actions/setup-python@v4  # Updated version of the action
         with:
           python-version: '3.12'
 
@@ -24,7 +24,7 @@ jobs:
           pip install -r lambda/requirements.txt -t lambda/
 
       - name: Configure AWS Credentials   # Set up AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1  # Use the latest version
+        uses: aws-actions/configure-aws-credentials@v2  # Use the latest version
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
